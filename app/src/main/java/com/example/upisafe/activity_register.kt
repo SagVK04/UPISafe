@@ -25,29 +25,32 @@ class activity_register : AppCompatActivity() {
             insets
         }
         auth = FirebaseAuth.getInstance()
-        val email = bind.etEmail.text.toString()
-        val pass=bind.etPassword.text.toString()
-        val re_pass=bind.etConfirmPassword.text.toString()
-                if(email.isEmpty()||pass.isEmpty()||re_pass.isEmpty()){
-                    Toast.makeText(this, "Please enter all details", Toast.LENGTH_SHORT).show()
+        bind.btnRegister.setOnClickListener {
+            val email = bind.etEmail.text.toString()
+            val pass=bind.etPassword.text.toString()
+            val re_pass=bind.etConfirmPassword.text.toString()
+            if(email.isEmpty()||pass.isEmpty()||re_pass.isEmpty()){
+                Toast.makeText(this, "Please enter all details", Toast.LENGTH_SHORT).show()
+            }
+            else{
+                if(pass != re_pass){
+                    Toast.makeText(this, "Password not matched", Toast.LENGTH_SHORT).show()
                 }
                 else{
-                    if(pass != re_pass){
-                        Toast.makeText(this, "Password not matched", Toast.LENGTH_SHORT).show()
-                    }
-                    else{
-                        auth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener(this) {task ->
-                            if(task.isSuccessful){
-                                Toast.makeText(this, "Registered Successfully!", Toast.LENGTH_SHORT).show()
-                                val intent = Intent(this,activity_user_dashboard::class.java)
-                                intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                                finish()
-                            }
-                            else{
-                                Toast.makeText(this, "User creation failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
-                            }
+                    auth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener(this) {task ->
+                        if(task.isSuccessful){
+                            Toast.makeText(this, "Registered Successfully!", Toast.LENGTH_SHORT).show()
+                            val intent = Intent(this,activity_user_dashboard::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                            startActivity(intent)
+                            finish()
+                        }
+                        else{
+                            Toast.makeText(this, "User creation failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
+            }
+        }
     }
 }

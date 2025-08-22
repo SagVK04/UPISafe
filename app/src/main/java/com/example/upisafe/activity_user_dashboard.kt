@@ -46,6 +46,18 @@ class activity_user_dashboard : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+        bind.etAmount.setOnClickListener {
+            bind.tvResult.setText("")
+        }
+        bind.etDate.setOnClickListener {
+            bind.tvResult.setText("")
+        }
+        bind.etTime.setOnClickListener {
+            bind.tvResult.setText("")
+        }
+        bind.actvType.setOnClickListener {
+            bind.tvResult.setText("")
+        }
         bind.clear.setOnClickListener{
             bind.etAmount.setText("")
             bind.etDate.setText("")
