@@ -1,27 +1,36 @@
 package com.example.upisafe
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.widget.ArrayAdapter
-import android.widget.ListAdapter
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.createBitmap
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.android.volley.Request.Method
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.upisafe.databinding.ActivityUserDashboardBinding
 import com.google.firebase.auth.FirebaseAuth
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import org.json.JSONObject
+import java.io.File
+import java.io.FileOutputStream
 
 class activity_user_dashboard : AppCompatActivity() {
     private val bind: ActivityUserDashboardBinding by lazy {
         ActivityUserDashboardBinding.inflate(layoutInflater)
     }
+
     private lateinit var auth : FirebaseAuth
     val url = "https://upisafe-flask-giuq.onrender.com"
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,18 +54,6 @@ class activity_user_dashboard : AppCompatActivity() {
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
             finish()
-        }
-        bind.etAmount.setOnClickListener {
-            bind.tvResult.setText("")
-        }
-        bind.etDate.setOnClickListener {
-            bind.tvResult.setText("")
-        }
-        bind.etTime.setOnClickListener {
-            bind.tvResult.setText("")
-        }
-        bind.actvType.setOnClickListener {
-            bind.tvResult.setText("")
         }
         bind.clear.setOnClickListener{
             bind.etAmount.setText("")
@@ -99,7 +96,8 @@ class activity_user_dashboard : AppCompatActivity() {
                         bind.tvResult.setText("Possibly Safe!")
                     bind.btnCheckFraud.isEnabled = true
                 }catch(e: Exception){
-                    Toast.makeText(this, "Exception occurs", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Error parsing response: ${e.message}", Toast.LENGTH_SHORT).show()
+                    bind.tvResult.setText("Error! ❌")
                 }
                 finally {
                     bind.clear.isEnabled = true

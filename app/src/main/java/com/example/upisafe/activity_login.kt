@@ -21,7 +21,9 @@ class activity_login : AppCompatActivity() {
         super.onStart()
         val cur_session:FirebaseUser? = auth.currentUser
         if(cur_session != null){
-            val intent = startActivity(Intent(this,activity_user_dashboard::class.java))
+            val intent = Intent(this,activity_user_dashboard::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(intent)
             finish()
         }
     }
@@ -45,7 +47,7 @@ class activity_login : AppCompatActivity() {
                     .addOnCompleteListener { task->
                         if(task.isSuccessful){
                             Toast.makeText(this, "Logged in successfully", Toast.LENGTH_SHORT).show()
-                            startActivity(Intent(this, activity_user_dashboard::class.java))
+                            startActivity(Intent(this, UPISafe_Informations::class.java))
                             finish()
                         }
                         else{
