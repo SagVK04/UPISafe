@@ -47,7 +47,7 @@ class activity_login : AppCompatActivity() {
                     .addOnCompleteListener { task->
                         if(task.isSuccessful){
                             Toast.makeText(this, "Logged in successfully", Toast.LENGTH_SHORT).show()
-                            startActivity(Intent(this, UPISafe_Informations::class.java))
+                            startActivity(Intent(this, activity_user_dashboard::class.java))
                             finish()
                         }
                         else{
