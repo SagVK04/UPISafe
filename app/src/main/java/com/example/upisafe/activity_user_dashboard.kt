@@ -109,8 +109,8 @@ class activity_user_dashboard : AppCompatActivity() {
             val finamt = amount.toInt()
             if(finamt<=0){
                 Toast.makeText(this, "Transaction Amount can't be Zero or Negative", Toast.LENGTH_SHORT).show()
-                bind.btnCheckFraud.isEnabled = false
-                bind.clear.isEnabled = false
+                bind.btnCheckFraud.isEnabled = true
+                bind.clear.isEnabled = true
                 return
             }
             val timepart = time.split(":")
@@ -189,15 +189,21 @@ class activity_user_dashboard : AppCompatActivity() {
             Response.Listener<String>(){response->
                 try {
                     val json_obj = JSONObject(response)
-                    val pred = json_obj.getString("Fraud Possibility")
-                    if(pred == "[1]")
-                        bind.tvResult.setText("Possibly Fraud!")
+                    val pred = json_obj.getString("fraud_score")
+                    if(pred < 50.toString()) {
+                        if (pred < 25.toString())
+                            bind.tvResult.setText("Almost Safe! [Risk Score: ${pred}%]")
+                        else
+                            bind.tvResult.setText("Maybe Fraud! [Risk Score: ${pred}%]")
+                    }
                     else
-                        bind.tvResult.setText("Possibly Safe!")
+                        bind.tvResult.setText("Almost Fraud! [Risk Score: ${pred}%]")
                     bind.btnCheckFraud.isEnabled = true
                 }catch(e: Exception){
                     Toast.makeText(this, "Error parsing response: ${e.message}", Toast.LENGTH_SHORT).show()
                     bind.tvResult.setText("Error! ❌")
+                    bind.btnCheckFraud.isEnabled = true
+                    bind.clear.isEnabled = true
                 }
                 finally {
                     bind.clear.isEnabled = true
