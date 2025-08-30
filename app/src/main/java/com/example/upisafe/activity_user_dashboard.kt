@@ -1,36 +1,26 @@
 package com.example.upisafe
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
-import android.os.Build
+import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.upisafe.databinding.ActivityUserDashboardBinding
 import com.google.firebase.auth.FirebaseAuth
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import org.json.JSONObject
-import java.io.File
-import java.io.FileOutputStream
-import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
-import java.util.Locale
 
 class activity_user_dashboard : AppCompatActivity() {
     private val bind: ActivityUserDashboardBinding by lazy {
@@ -43,12 +33,37 @@ class activity_user_dashboard : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(bind.root)
-        auth = FirebaseAuth.getInstance()
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+
+        // Fix: Apply the system bar padding to the content ScrollView instead of the main DrawerLayout.
+        // The DrawerLayout itself handles its own insets, and this ensures the ScrollView content starts below the status bar.
+        ViewCompat.setOnApplyWindowInsetsListener(bind.mainDraw) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        bind.opendrawer.setOnClickListener {
+            bind.mainDraw.openDrawer(GravityCompat.START)
+        }
+        bind.navView.setNavigationItemSelectedListener { item ->
+            val itemId = item.itemId
+            when (itemId) {
+                R.id.nav_what_is_fraud -> {
+                    val intent = Intent(this,upisafe_info::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
+                R.id.nav_contact_us -> {
+                    Toast.makeText(this, "Not Implemented!", Toast.LENGTH_SHORT).show()
+                }
+                R.id.nav_about_us -> {
+                    Toast.makeText(this, "Not Implemented!", Toast.LENGTH_SHORT).show()
+                }
+            }
+            true
+        }
+        auth = FirebaseAuth.getInstance()
+        setTransparentStatusBar()
         setUpSpinner()
         textwatcher()
 
@@ -57,7 +72,7 @@ class activity_user_dashboard : AppCompatActivity() {
         }
         bind.btnLogout.setOnClickListener {
             auth.signOut()
-            val intent = Intent(this,activity_login::class.java)
+            val intent = Intent(this,login::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
             finish()
@@ -71,6 +86,14 @@ class activity_user_dashboard : AppCompatActivity() {
             bind.btnCheckFraud.isEnabled = true
         }
     }
+
+    private fun setTransparentStatusBar() {
+        // Allows content to be drawn behind the system bars
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        // Sets the status bar color to transparent
+        window.statusBarColor = Color.TRANSPARENT
+    }
+
 
     private fun textwatcher() {
         val textWatcher = object : TextWatcher{
@@ -142,17 +165,19 @@ class activity_user_dashboard : AppCompatActivity() {
 
             var dInput_1_day = 0
             if(
-                dInput_1[0] == "00" || (dInput_1[0] >"31" && dInput_1[1] != "02") || ((dInput_1[0] >"31" && dInput_1[1] != "2"))
-                || (dInput_1[0] >="30" && dInput_1[1] == "2") || (dInput_1[0] >="30" && dInput_1[1] == "02")){
-                Toast.makeText(this, "Invalid Date Format or Value!", Toast.LENGTH_SHORT).show()
-                bind.btnCheckFraud.isEnabled = true
-                bind.clear.isEnabled = true
-                return
+                (dInput_1[0].toInt() == 0) ||
+                (dInput_1[0].toInt() > 31 && dInput_1[1].toInt() != 2) ||
+                (dInput_1[0].toInt() > 30 && dInput_1[1].toInt() == 2)
+                ){
+                    Toast.makeText(this, "Invalid Date Format or Value!", Toast.LENGTH_SHORT).show()
+                    bind.btnCheckFraud.isEnabled = true
+                    bind.clear.isEnabled = true
+                    return
             }
             dInput_1_day = dInput_1[0].toInt()
 
             var dInput_1_month = 0
-            if(dInput_1[1] == "00" || dInput_1[1] >= "12"){
+            if(dInput_1[1].toInt() == 0 || dInput_1[1].toInt() > 12){
                 Toast.makeText(this, "Invalid Date Format or Value!", Toast.LENGTH_SHORT).show()
                 bind.btnCheckFraud.isEnabled = true
                 bind.clear.isEnabled = true
@@ -161,7 +186,7 @@ class activity_user_dashboard : AppCompatActivity() {
             dInput_1_month = dInput_1[1].toInt()
 
             var dInput_1_year = 0
-            if(dInput_1[2] == "0000"){
+            if(dInput_1[2].toInt() == 0 || dInput_1[2].length<4){
                 Toast.makeText(this, "Invalid Date Format or Value!", Toast.LENGTH_SHORT).show()
                 bind.btnCheckFraud.isEnabled = true
                 bind.clear.isEnabled = true
@@ -189,15 +214,13 @@ class activity_user_dashboard : AppCompatActivity() {
             Response.Listener<String>(){response->
                 try {
                     val json_obj = JSONObject(response)
-                    val pred = json_obj.getString("fraud_score")
-                    if(pred < 50.toString()) {
-                        if (pred < 25.toString())
-                            bind.tvResult.setText("Almost Safe! [Risk Score: ${pred}%]")
-                        else
-                            bind.tvResult.setText("Maybe Fraud! [Risk Score: ${pred}%]")
+                    val pred = json_obj.getString("fraud_result")
+                    val pred_score = json_obj.getString("fraud_score")
+                    if(pred.equals("0")) {
+                        bind.tvResult.setText("Predicted Result: Safe! [Risk Score: ${pred_score}%]")
                     }
                     else
-                        bind.tvResult.setText("Almost Fraud! [Risk Score: ${pred}%]")
+                        bind.tvResult.setText("Predicted Result: Fraud! [Risk Score: ${pred_score}%]")
                     bind.btnCheckFraud.isEnabled = true
                 }catch(e: Exception){
                     Toast.makeText(this, "Error parsing response: ${e.message}", Toast.LENGTH_SHORT).show()

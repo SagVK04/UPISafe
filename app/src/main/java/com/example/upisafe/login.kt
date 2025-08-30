@@ -8,11 +8,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.upisafe.databinding.ActivityLoginBinding
-import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
-class activity_login : AppCompatActivity() {
+class login : AppCompatActivity() {
     private val bind : ActivityLoginBinding by lazy {
         ActivityLoginBinding.inflate(layoutInflater)
     }

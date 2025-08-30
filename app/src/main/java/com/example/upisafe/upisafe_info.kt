@@ -7,7 +7,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.upisafe.databinding.ActivityUpisafeInfoBinding
 
-class activity_upisafe_info : AppCompatActivity() {
+class upisafe_info : AppCompatActivity() {
     private val bind : ActivityUpisafeInfoBinding by lazy{
         ActivityUpisafeInfoBinding.inflate(layoutInflater)
     }

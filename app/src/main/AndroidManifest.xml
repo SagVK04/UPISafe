@@ -11,13 +11,16 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logo_1"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/logo_1"
         android:supportsRtl="true"
         android:theme="@style/Theme.UPISafe">
         <activity
-            android:name=".activity_upisafe_info"
+            android:name=".toggle_content"
+            android:exported="false" />
+        <activity
+            android:name=".upisafe_info"
             android:exported="false" />
         <activity
             android:name=".UPISafe_Informations"
@@ -26,7 +29,7 @@
             android:name=".activity_user_dashboard"
             android:exported="false" />
         <activity
-            android:name=".activity_login"
+            android:name=".login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
