@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/Linear_1"
+    android:id="@+id/Linear_2"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -24,7 +24,7 @@
             android:src="@drawable/baseline_3p_24" />
     </androidx.cardview.widget.CardView>
     <TextView
-        android:id="@+id/header_name"
+        android:id="@+id/header_name_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10sp"
@@ -34,7 +34,7 @@
         android:textSize="15sp"/>
 
     <TextView
-        android:id="@+id/header_mail"
+        android:id="@+id/header_mail_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"

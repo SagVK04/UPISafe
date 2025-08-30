@@ -2,10 +2,13 @@ package com.example.upisafe
 
 import android.content.Intent
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.WindowManager
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +21,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.upisafe.databinding.ActivityUserDashboardBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import org.json.JSONObject
 import java.util.Calendar
 import java.util.Date
@@ -28,10 +32,27 @@ class activity_user_dashboard : AppCompatActivity() {
     }
 
     private lateinit var auth : FirebaseAuth
+
+    override fun onStart() {
+        super.onStart()
+        val cur_session : FirebaseUser? = auth.currentUser
+        val headerView = bind.navViewDash.getHeaderView(0)
+        val displayname : TextView = headerView.findViewById(R.id.header_name)
+        val displaymail : TextView = headerView.findViewById(R.id.header_mail)
+        if (cur_session != null) {
+            val email = cur_session.email
+            val email_new = email?.split("@")
+            displayname.setText("Hi ${email_new?.get(0)} !")
+            displayname.textSize = 25F
+            displaymail.setText(email)
+        }
+    }
+
     val url = "https://upisafe-flask-giuq.onrender.com"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        setTransparentStatusBar()
         setContentView(bind.root)
 
         // Fix: Apply the system bar padding to the content ScrollView instead of the main DrawerLayout.
@@ -45,13 +66,13 @@ class activity_user_dashboard : AppCompatActivity() {
         bind.opendrawer.setOnClickListener {
             bind.mainDraw.openDrawer(GravityCompat.START)
         }
-        bind.navView.setNavigationItemSelectedListener { item ->
-            val itemId = item.itemId
-            when (itemId) {
+        bind.navViewDash.setNavigationItemSelectedListener { item ->
+            when (item.itemId) {
                 R.id.nav_what_is_fraud -> {
                     val intent = Intent(this,upisafe_info::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
+                    finish()
                 }
                 R.id.nav_contact_us -> {
                     Toast.makeText(this, "Not Implemented!", Toast.LENGTH_SHORT).show()
@@ -63,6 +84,7 @@ class activity_user_dashboard : AppCompatActivity() {
             true
         }
         auth = FirebaseAuth.getInstance()
+
         setTransparentStatusBar()
         setUpSpinner()
         textwatcher()
@@ -88,10 +110,7 @@ class activity_user_dashboard : AppCompatActivity() {
     }
 
     private fun setTransparentStatusBar() {
-        // Allows content to be drawn behind the system bars
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-        // Sets the status bar color to transparent
-        window.statusBarColor = Color.TRANSPARENT
+        WindowCompat.setDecorFitsSystemWindows(window, true)
     }
 
 
