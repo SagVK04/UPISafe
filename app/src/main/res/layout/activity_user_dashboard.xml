@@ -7,80 +7,82 @@
     android:layout_height="match_parent"
     tools:openDrawer="start">
 
-    <!-- This CoordinatorLayout handles the scrolling behavior of the content relative to the app bar. -->
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".UserDashboardActivity">
 
-        <!-- The top app bar, which contains the title and drawer button. -->
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:elevation="0dp">
+            app:elevation="4dp"
+            android:fitsSystemWindows="true">
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/top_app_bar"
-                style="@style/Widget.Material3.Toolbar.Surface"
+                style="@style/Widget.Material3.Toolbar.OnSurface"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:paddingTop="24dp">
+                android:layout_height="?attr/actionBarSize">
 
                 <ImageButton
                     android:id="@+id/opendrawer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:src="@drawable/outline_assignment_24" />
+                    android:background="@drawable/outline_assignment_24"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp" />
 
                 <TextView
                     android:id="@+id/tvTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="User Dashboard"
+                    android:text="UPISafe"
                     android:textAppearance="?attr/textAppearanceTitleLarge"
-                    android:textColor="#3D509D"
-                    android:textSize="30sp"
+                    android:textColor="#FFFFFF"
+                    android:textSize="24sp"
                     android:textStyle="bold" />
 
             </com.google.android.material.appbar.MaterialToolbar>
         </com.google.android.material.appbar.AppBarLayout>
 
-        <!-- A scrollable container for the main content. -->
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingTop="24dp"
+            android:clipToPadding="false"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <!-- The main content area, a ConstraintLayout to easily position elements. -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="24dp">
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="48dp">
 
                 <TextView
                     android:id="@+id/tvSubtitle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="32dp"
                     android:text="Enter Transaction Details"
                     android:textAlignment="center"
-                    android:textAppearance="?attr/textAppearanceHeadline6"
-                    android:textColor="#EB5A10"
+                    android:textAppearance="?attr/textAppearanceHeadlineSmall"
+                    android:textColor="#0876E0"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilAmount"
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="24dp"
                     android:hint="Amount (e.g., 500.00)"
+                    app:hintTextColor="@color/black"
+                    android:background="#FFFDE7"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvSubtitle">
@@ -89,16 +91,19 @@
                         android:id="@+id/etAmount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        app:hintTextColor="@color/black"
                         android:inputType="numberDecimal" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilDate"
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:hint="Date (DD/MM/YYYY)"
+                    app:hintTextColor="@color/black"
+                    android:background="#E8F5E9"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tilAmount">
@@ -107,16 +112,19 @@
                         android:id="@+id/etDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        app:hintTextColor="@color/black"
                         android:inputType="date" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilTime"
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:hint="Time (24 Hour - HH:MM)"
+                    app:hintTextColor="@color/black"
+                    android:background="#E1F5FE"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tilDate">
@@ -125,16 +133,19 @@
                         android:id="@+id/etTime"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        app:hintTextColor="@color/black"
                         android:inputType="time" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilType"
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    style="@style/Widget.Material3.TextInputLayout.FilledBox.ExposedDropdownMenu"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:hint="Transaction Platform"
+                    app:hintTextColor="@color/black"
+                    android:background="#F3E5F5"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tilTime">
@@ -143,35 +154,39 @@
                         android:id="@+id/actvType"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        app:hintTextColor="@color/black"
                         android:inputType="textAutoComplete" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnCheckFraud"
                     style="@style/Widget.Material3.Button.ElevatedButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="165dp"
+                    android:layout_height="54dp"
                     android:layout_marginTop="32dp"
                     android:layout_marginEnd="8dp"
+                    android:paddingVertical="14dp"
                     android:text="Check for Fraud"
-                    android:textSize="12.5sp"
-                    android:textColor="@color/white"
-                    app:backgroundTint="#DB4990"
-                    app:layout_constraintEnd_toStartOf="@id/clear"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    app:backgroundTint="#C31B56"
+                    app:layout_constraintEnd_toStartOf="@id/btnClear"
                     app:layout_constraintHorizontal_weight="1"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tilType" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/clear"
+                    android:id="@+id/btnClear"
+                    style="@style/Widget.Material3.Button.ElevatedButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="32dp"
-                    android:paddingVertical="12dp"
+                    android:paddingVertical="14dp"
                     android:text="Clear"
                     android:textSize="14sp"
-                    app:backgroundTint="#1688DC"
+                    android:textColor="#FFFFFF"
+                    app:backgroundTint="#2475B6"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_weight="1"
                     app:layout_constraintStart_toEndOf="@id/btnCheckFraud"
@@ -183,9 +198,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
                     android:gravity="center"
-                    android:textColor="#FFB249"
-                    android:textAppearance="?attr/textAppearanceHeadline6"
-                    android:textSize="25sp"
+                    android:textColor="#D32F2F"
+                    android:textAppearance="?attr/textAppearanceHeadlineMedium"
+                    android:textStyle="bold"
+                    android:textSize="22sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/btnCheckFraud"
@@ -193,18 +209,15 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnLogout"
-                    style="@style/Widget.Material3.Button.TextButton"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="84dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="24dp"
+                    android:layout_marginTop="64dp"
                     android:text="Logout"
-                    android:textColor="#E50909"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:textColor="#C62828"
+                    app:strokeColor="#C62828"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvResult"
-                    app:layout_constraintVertical_bias="1.0" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvResult" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -212,14 +225,15 @@
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <!-- This is the navigation drawer itself, which slides out from the left. -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view_dash"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="#FFFAFB"
+        android:background="@color/input_bg_pale"
+        app:itemTextColor="@color/black"
         app:menu="@menu/nav_menu"
-        app:headerLayout="@layout/drawer_header" />
+        app:headerLayout="@layout/drawer_header"
+        android:fitsSystemWindows="true"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>

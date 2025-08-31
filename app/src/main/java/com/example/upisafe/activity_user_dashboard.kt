@@ -99,7 +99,7 @@ class activity_user_dashboard : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-        bind.clear.setOnClickListener{
+        bind.btnClear.setOnClickListener{
             bind.etAmount.setText("")
             bind.etDate.setText("")
             bind.etTime.setText("")
@@ -141,32 +141,32 @@ class activity_user_dashboard : AppCompatActivity() {
         val date = bind.etDate.text.toString()
         val time = bind.etTime.text.toString()
         bind.btnCheckFraud.isEnabled = false
-        bind.clear.isEnabled = false
+        bind.btnClear.isEnabled = false
         if(amount.isEmpty() || date.isEmpty() || time.isEmpty()) {
             Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_SHORT).show()
             bind.btnCheckFraud.isEnabled = true
-            bind.clear.isEnabled = true
+            bind.btnClear.isEnabled = true
         }
         else{
             val finamt = amount.toInt()
             if(finamt<=0){
                 Toast.makeText(this, "Transaction Amount can't be Zero or Negative", Toast.LENGTH_SHORT).show()
                 bind.btnCheckFraud.isEnabled = true
-                bind.clear.isEnabled = true
+                bind.btnClear.isEnabled = true
                 return
             }
             val timepart = time.split(":")
             if(timepart.size !=2){
                 Toast.makeText(this, "Invalid Time Format!", Toast.LENGTH_SHORT).show()
                 bind.btnCheckFraud.isEnabled = false
-                bind.clear.isEnabled = false
+                bind.btnClear.isEnabled = false
             }
             val hour = timepart[0].toInt()
             val min = timepart[1].toInt()
             if (hour !in 0..23 || min !in 0..59) {
                 Toast.makeText(this, "Invalid time! Hours must be 00-23, Minutes 00-59", Toast.LENGTH_SHORT).show()
                 bind.btnCheckFraud.isEnabled = true
-                bind.clear.isEnabled = true
+                bind.btnClear.isEnabled = true
                 return
             }
 
@@ -178,7 +178,7 @@ class activity_user_dashboard : AppCompatActivity() {
             if(dInput_1.size != 3){
                 Toast.makeText(this, "Invalid Date Format!", Toast.LENGTH_SHORT).show()
                 bind.btnCheckFraud.isEnabled = true
-                bind.clear.isEnabled = true
+                bind.btnClear.isEnabled = true
                 return
             }
 
@@ -190,7 +190,7 @@ class activity_user_dashboard : AppCompatActivity() {
                 ){
                     Toast.makeText(this, "Invalid Date Format or Value!", Toast.LENGTH_SHORT).show()
                     bind.btnCheckFraud.isEnabled = true
-                    bind.clear.isEnabled = true
+                    bind.btnClear.isEnabled = true
                     return
             }
             dInput_1_day = dInput_1[0].toInt()
@@ -199,7 +199,7 @@ class activity_user_dashboard : AppCompatActivity() {
             if(dInput_1[1].toInt() == 0 || dInput_1[1].toInt() > 12){
                 Toast.makeText(this, "Invalid Date Format or Value!", Toast.LENGTH_SHORT).show()
                 bind.btnCheckFraud.isEnabled = true
-                bind.clear.isEnabled = true
+                bind.btnClear.isEnabled = true
                 return
             }
             dInput_1_month = dInput_1[1].toInt()
@@ -208,7 +208,7 @@ class activity_user_dashboard : AppCompatActivity() {
             if(dInput_1[2].toInt() == 0 || dInput_1[2].length<4){
                 Toast.makeText(this, "Invalid Date Format or Value!", Toast.LENGTH_SHORT).show()
                 bind.btnCheckFraud.isEnabled = true
-                bind.clear.isEnabled = true
+                bind.btnClear.isEnabled = true
                 return
             }
             dInput_1_year = dInput_1[2].toInt()
@@ -218,7 +218,7 @@ class activity_user_dashboard : AppCompatActivity() {
             if(dInput.after(dToday)){
                 Toast.makeText(this, "Date or Time can't be in Future!", Toast.LENGTH_SHORT).show()
                 bind.btnCheckFraud.isEnabled = true
-                bind.clear.isEnabled = true
+                bind.btnClear.isEnabled = true
                 return
             }
 
@@ -245,10 +245,10 @@ class activity_user_dashboard : AppCompatActivity() {
                     Toast.makeText(this, "Error parsing response: ${e.message}", Toast.LENGTH_SHORT).show()
                     bind.tvResult.setText("Error! ❌")
                     bind.btnCheckFraud.isEnabled = true
-                    bind.clear.isEnabled = true
+                    bind.btnClear.isEnabled = true
                 }
                 finally {
-                    bind.clear.isEnabled = true
+                    bind.btnClear.isEnabled = true
                 }
             },
             Response.ErrorListener(){

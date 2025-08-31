@@ -19,7 +19,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/colorSurface"
-            app:liftOnScroll="true">
+            app:liftOnScroll="true"
+            android:fitsSystemWindows="true">
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/topAppBar"
@@ -62,7 +63,7 @@
                             android:layout_height="wrap_content"
                             android:text="Understanding Fraudulent Transactions"
                             android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
-                            android:textColor="?attr/colorPrimary" />
+                            android:textColor="@color/text_vibrant" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -87,7 +88,7 @@
                             android:textStyle="bold"
                             android:text="Key Indicators to Watch For:"
                             android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
-                            android:textColor="?attr/colorPrimary" />
+                            android:textColor="@color/text_vibrant" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -106,12 +107,14 @@
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view_info"
+        android:fitsSystemWindows="true"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="#FFFAFB"
+        android:background="@color/input_bg_pale"
         app:menu="@menu/nav_menu_1"
-        app:headerLayout="@layout/drawer_header_1" />
+        app:headerLayout="@layout/drawer_header_1"
+        app:itemTextColor="@color/black" />
 
     <!-- The navigation drawer that slides out from the left -->
 
