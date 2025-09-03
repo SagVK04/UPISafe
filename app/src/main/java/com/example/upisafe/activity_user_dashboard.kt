@@ -249,7 +249,7 @@ class activity_user_dashboard : AppCompatActivity() {
                     hideLoading()
                 }catch(e: Exception){
                     Toast.makeText(this, "Error parsing response: ${e.message}", Toast.LENGTH_SHORT).show()
-                    bind.tvResult.setText("Error! ❌")
+                    bind.tvResult.setText("Error!❌")
                     hideLoading()
                 }
             },
