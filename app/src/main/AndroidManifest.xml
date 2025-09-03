@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UPISafe">
         <activity
+            android:name=".progressActivity"
+            android:exported="false" />
+        <activity
             android:name=".toggle_content"
             android:exported="false" />
         <activity

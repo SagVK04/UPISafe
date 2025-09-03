@@ -6,12 +6,15 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.view.WindowManager
 import android.widget.ArrayAdapter
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.createBitmap
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
@@ -50,6 +53,7 @@ class activity_user_dashboard : AppCompatActivity() {
 
     val url = "https://upisafe-flask-giuq.onrender.com"
     override fun onCreate(savedInstanceState: Bundle?) {
+        hideLoading()
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setTransparentStatusBar()
@@ -137,6 +141,7 @@ class activity_user_dashboard : AppCompatActivity() {
     }
 
     private fun checkFraud() {
+        showLoading()
         val amount = bind.etAmount.text.toString()
         val date = bind.etDate.text.toString()
         val time = bind.etTime.text.toString()
@@ -144,29 +149,32 @@ class activity_user_dashboard : AppCompatActivity() {
         bind.btnClear.isEnabled = false
         if(amount.isEmpty() || date.isEmpty() || time.isEmpty()) {
             Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_SHORT).show()
-            bind.btnCheckFraud.isEnabled = true
-            bind.btnClear.isEnabled = true
+            hideLoading()
+            return
         }
         else{
             val finamt = amount.toInt()
             if(finamt<=0){
                 Toast.makeText(this, "Transaction Amount can't be Zero or Negative", Toast.LENGTH_SHORT).show()
-                bind.btnCheckFraud.isEnabled = true
-                bind.btnClear.isEnabled = true
+                hideLoading()
+                return
+            }
+            if(!time.contains(":")) {
+                Toast.makeText(this, "Invalid Time Format!", Toast.LENGTH_SHORT).show()
+                hideLoading()
                 return
             }
             val timepart = time.split(":")
             if(timepart.size !=2){
                 Toast.makeText(this, "Invalid Time Format!", Toast.LENGTH_SHORT).show()
-                bind.btnCheckFraud.isEnabled = false
-                bind.btnClear.isEnabled = false
+                hideLoading()
+                return
             }
             val hour = timepart[0].toInt()
             val min = timepart[1].toInt()
             if (hour !in 0..23 || min !in 0..59) {
                 Toast.makeText(this, "Invalid time! Hours must be 00-23, Minutes 00-59", Toast.LENGTH_SHORT).show()
-                bind.btnCheckFraud.isEnabled = true
-                bind.btnClear.isEnabled = true
+                hideLoading()
                 return
             }
 
@@ -177,8 +185,7 @@ class activity_user_dashboard : AppCompatActivity() {
             val dInput_1 = date.split("/")
             if(dInput_1.size != 3){
                 Toast.makeText(this, "Invalid Date Format!", Toast.LENGTH_SHORT).show()
-                bind.btnCheckFraud.isEnabled = true
-                bind.btnClear.isEnabled = true
+                hideLoading()
                 return
             }
 
@@ -189,8 +196,7 @@ class activity_user_dashboard : AppCompatActivity() {
                 (dInput_1[0].toInt() > 30 && dInput_1[1].toInt() == 2)
                 ){
                     Toast.makeText(this, "Invalid Date Format or Value!", Toast.LENGTH_SHORT).show()
-                    bind.btnCheckFraud.isEnabled = true
-                    bind.btnClear.isEnabled = true
+                    hideLoading()
                     return
             }
             dInput_1_day = dInput_1[0].toInt()
@@ -198,8 +204,7 @@ class activity_user_dashboard : AppCompatActivity() {
             var dInput_1_month = 0
             if(dInput_1[1].toInt() == 0 || dInput_1[1].toInt() > 12){
                 Toast.makeText(this, "Invalid Date Format or Value!", Toast.LENGTH_SHORT).show()
-                bind.btnCheckFraud.isEnabled = true
-                bind.btnClear.isEnabled = true
+                hideLoading()
                 return
             }
             dInput_1_month = dInput_1[1].toInt()
@@ -207,8 +212,7 @@ class activity_user_dashboard : AppCompatActivity() {
             var dInput_1_year = 0
             if(dInput_1[2].toInt() == 0 || dInput_1[2].length<4){
                 Toast.makeText(this, "Invalid Date Format or Value!", Toast.LENGTH_SHORT).show()
-                bind.btnCheckFraud.isEnabled = true
-                bind.btnClear.isEnabled = true
+                hideLoading()
                 return
             }
             dInput_1_year = dInput_1[2].toInt()
@@ -217,8 +221,7 @@ class activity_user_dashboard : AppCompatActivity() {
 
             if(dInput.after(dToday)){
                 Toast.makeText(this, "Date or Time can't be in Future!", Toast.LENGTH_SHORT).show()
-                bind.btnCheckFraud.isEnabled = true
-                bind.btnClear.isEnabled = true
+                hideLoading()
                 return
             }
 
@@ -237,21 +240,21 @@ class activity_user_dashboard : AppCompatActivity() {
                     val pred_score = json_obj.getString("fraud_score")
                     if(pred.equals("0")) {
                         bind.tvResult.setText("Predicted Result: Safe! [Risk Score: ${pred_score}%]")
+                        bind.tvResult.setTextColor(Color.CYAN)
                     }
-                    else
+                    else {
                         bind.tvResult.setText("Predicted Result: Fraud! [Risk Score: ${pred_score}%]")
-                    bind.btnCheckFraud.isEnabled = true
+                        bind.tvResult.setTextColor(Color.RED)
+                    }
+                    hideLoading()
                 }catch(e: Exception){
                     Toast.makeText(this, "Error parsing response: ${e.message}", Toast.LENGTH_SHORT).show()
                     bind.tvResult.setText("Error! ❌")
-                    bind.btnCheckFraud.isEnabled = true
-                    bind.btnClear.isEnabled = true
-                }
-                finally {
-                    bind.btnClear.isEnabled = true
+                    hideLoading()
                 }
             },
             Response.ErrorListener(){
+                showLoading()
                 checkFraud_1(finamt,findate,fintime)
             }
         ){
@@ -272,5 +275,16 @@ class activity_user_dashboard : AppCompatActivity() {
         val plat = listOf("GPay", "Paytm", "PhonePe", "BharatPe", "PayPal", "Others")
         val plat_adapter = ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item,plat)
         bind.actvType.setAdapter(plat_adapter)
+    }
+    private fun showLoading() {
+        bind.loadingLayout.visibility = View.VISIBLE
+        bind.btnCheckFraud.isEnabled = false
+        bind.btnClear.isEnabled = false
+    }
+
+    private fun hideLoading() {
+        bind.loadingLayout.visibility = View.GONE
+        bind.btnCheckFraud.isEnabled = true
+        bind.btnClear.isEnabled = true
     }
 }
