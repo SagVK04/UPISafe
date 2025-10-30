@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_what_is_fraud"
+            android:title="What is UPISafe?"
+            android:titleTextColor="#000000"/>
+        <item
+            android:id="@+id/details_hist"
+            android:title="Transaction Details History"
+            android:titleTextColor="#000000"/>
+        <item
+            android:id="@+id/nav_about_us"
+            android:title="About Us"
+            android:titleTextColor="#000000"/>
+    </group>
+</menu>

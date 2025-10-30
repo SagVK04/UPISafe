@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/Linear_2"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#2061A0"
+    android:gravity="bottom"
+    android:paddingLeft="24dp"
+    android:paddingTop="40dp"
+    android:paddingRight="24dp"
+    android:paddingBottom="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:fitsSystemWindows="true">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:src="@mipmap/logo_1" />
+
+        <TextView
+            android:id="@+id/title_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="16dp"
+            android:text="UPISafe"
+            android:layout_marginTop="15dp"
+            android:paddingStart="15dp"
+            android:gravity="left"
+            android:textAppearance="@style/Theme.PlayCore.Transparent"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+    </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:cardCornerRadius="40dp"
+        android:elevation="0dp"
+        android:backgroundTint="@color/input_bg_pale"
+        android:layout_marginBottom="16dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/baseline_3p_24"
+            android:contentDescription="User profile icon" />
+    </androidx.cardview.widget.CardView>
+    <TextView
+        android:id="@+id/header_name_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="User Name"
+        android:textColor="#A99F9D"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:id="@+id/header_mail_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Email Id"
+        android:textColor="#D926B2"
+        android:textSize="13sp"
+        android:textStyle="bold" />
+
+</LinearLayout>

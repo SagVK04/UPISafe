@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:openDrawer="start">
+
+    <!-- The main content area, a CoordinatorLayout for scrolling behavior -->
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/colorSurfaceContainerLow"
+        tools:context=".upisafe_info">
+
+        <!-- The top app bar with the title -->
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorSurface"
+            android:fitsSystemWindows="true">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/topAppBar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:title="What is UPISafe?"
+                app:subtitleTextColor="#103C95"
+                app:navigationIcon="@drawable/outline_assignment_24"
+                app:titleTextColor="?attr/colorOnSurface" />
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <!-- A scrollable container for the main text content -->
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Card explaining fraudulent transactions -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    app:cardBackgroundColor="?attr/colorSurface"
+                    app:cardCornerRadius="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="24dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Determine if a transaction is FRAUD or SAFE by the details given the user"
+                            android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
+                            android:textColor="#24770A" />
+
+                        <TextView
+                            android:id="@+id/tv_transaction_guide"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:lineSpacingExtra="4dp"
+                            android:text="Introduction:\nA fraudulent transaction occurs when someone gains unauthorized access to a user's payment information and uses it to make a purchase or transfer funds. These are often carried out by hackers or identity thieves.\n\n\n"
+                            android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                            android:textColor="#EB5A10"
+                            android:textStyle="bold"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="24dp"
+                            android:background="?attr/colorOutline" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="24dp"
+                            android:textStyle="bold"
+                            android:text="Mostly Used Key Indicators to Watch For:"
+                            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                            android:textColor="@color/primary_vibrant" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:textStyle="bold"
+                            android:textSize="17sp"
+                            android:text="⚠️ Unauthorized Activity: The account holder did not initiate the transaction.\n\n• 🌍 Unusual Location/Time: Happens in a far-off place or at a strange hour compared to the user’s norms.\n\n• 💸 Odd Amounts: Very large (big purchases) or very small ('test' amounts).\n\n• 🔄 Rapid Succession: Multiple, quick transactions after a successful test purchase.\n\n• 🛒 Unusual Merchant: Purchase made from a store the user never typically uses."
+                            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                            android:textColor="#9D2727" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="24dp"
+                            android:layout_marginBottom="8dp"
+                            android:background="?attr/colorOutline" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="24dp"
+                            android:textStyle="bold"
+                            android:text="✅ Determining FRAUD vs. SAFE:"
+                            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                            android:textColor="@color/primary_vibrant" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:text="To decide if a transaction is FRAUD or SAFE, look for patterns that deviate from the user's normal behavior:\n\n1. 🕵️ User History Check: Does the merchant name, location, and amount match what the user typically does?\n\n2. 📍 Location and IP: Is the transaction's geographical location consistent with the user’s device location?\n\n3. 🕰️ Time Factor: Is the time logical? Fraud often occurs at odd hours (like 3 AM).\n\nIn Short\nSAFE (Normal):\n✅ Familiar Merchant\n✅ Usual Amount Range\n✅ Known Location\n\nFRAUD (Suspicious):\n❌ Unknown/Risky Merchant\n❌ Extremes (Too High or Too Low)\n❌ Distant or Inconsistent Location"
+                            android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                            android:textColor="#E50606"
+                            android:lineSpacingExtra="4dp"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view_info"
+        android:fitsSystemWindows="true"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/input_bg_pale"
+        app:menu="@menu/nav_menu_1"
+        app:headerLayout="@layout/drawer_header_1"
+        app:itemTextColor="@color/black" />
+
+    <!-- The navigation drawer that slides out from the left -->
+
+</androidx.drawerlayout.widget.DrawerLayout>
