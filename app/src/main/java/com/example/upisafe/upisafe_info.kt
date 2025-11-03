@@ -44,11 +44,11 @@ class upisafe_info : AppCompatActivity() {
         // Set up the toolbar as the action bar and add a listener to open the drawer
         setSupportActionBar(bind.topAppBar)
         bind.topAppBar.setNavigationOnClickListener {
-            bind.main.openDrawer(GravityCompat.START)
+            bind.main1.openDrawer(GravityCompat.START)
         }
 
         // Handle window insets for edge-to-edge display
-        ViewCompat.setOnApplyWindowInsetsListener(bind.main) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(bind.main1) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
@@ -62,8 +62,11 @@ class upisafe_info : AppCompatActivity() {
                     startActivity(intent)
                     finish()
                 }
-                R.id.nav_contact_us_1 -> {
-                    Toast.makeText(this, "Not Implemented!", Toast.LENGTH_SHORT).show()
+                R.id.nav_details_hist_1 -> {
+                    val intent = Intent(this, activity_user_history::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                    finish()
                 }
                 R.id.nav_about_us_1 -> {
                     Toast.makeText(this, "Not Implemented!", Toast.LENGTH_SHORT).show()

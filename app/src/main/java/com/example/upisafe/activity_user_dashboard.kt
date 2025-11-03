@@ -47,6 +47,17 @@ class activity_user_dashboard : AppCompatActivity() {
         }
     }
 
+    var res_calculate = 0
+    var in_amt = 0
+    var in_time = 0
+    var in_date = 0
+
+    var in_result = ""
+
+    private fun setIntentVar(finamt: Int, findate: Int, fintime: Int, pred_res: String){
+        in_amt = finamt; in_date = findate; in_amt = fintime; in_result = pred_res
+    }
+
     val url = "https://upisafe-flask-giuq.onrender.com"
     override fun onCreate(savedInstanceState: Bundle?) {
         hideLoading()
@@ -57,14 +68,14 @@ class activity_user_dashboard : AppCompatActivity() {
 
         // Fix: Apply the system bar padding to the content ScrollView instead of the main DrawerLayout.
         // The DrawerLayout itself handles its own insets, and this ensures the ScrollView content starts below the status bar.
-        ViewCompat.setOnApplyWindowInsetsListener(bind.mainDraw) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(bind.maindraw) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
         bind.opendrawer.setOnClickListener {
-            bind.mainDraw.openDrawer(GravityCompat.START)
+            bind.maindraw.openDrawer(GravityCompat.START)
         }
         bind.navViewDash.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
@@ -75,7 +86,22 @@ class activity_user_dashboard : AppCompatActivity() {
                     finish()
                 }
                 R.id.details_hist -> {
-                    Toast.makeText(this, "Not Implemented!", Toast.LENGTH_SHORT).show()
+                    if(res_calculate == 1){
+                        val intent = Intent(this, activity_user_history::class.java)
+                        intent.putExtra("amount", in_amt.toString())
+                        intent.putExtra("date", in_date.toString())
+                        intent.putExtra("time", bind.etTime.text.toString())
+                        intent.putExtra("platform", bind.actvType.text.toString())
+                        intent.putExtra("result",in_result)
+                        startActivity(intent)
+                        finish()
+                    }
+                    else if(res_calculate == 0){
+                        val intent = Intent(this, activity_user_history::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        startActivity(intent)
+                        finish()
+                    }
                 }
                 R.id.nav_about_us -> {
                     Toast.makeText(this, "Not Implemented!", Toast.LENGTH_SHORT).show()
@@ -223,17 +249,21 @@ class activity_user_dashboard : AppCompatActivity() {
 
             val findate = date.replace("/","").toInt()
             val fintime = time.replace(":","").toInt()
-            checkFraud_1(finamt,findate,fintime)
+            checkFraud_1(finamt, findate, fintime)
         }
     }
 
     private fun checkFraud_1(finamt: Int, findate: Int, fintime: Int) {
+        var pred_result: String = ""
         val str = object : StringRequest(Method.POST,url,
             Response.Listener<String>(){response->
                 try {
                     val json_obj = JSONObject(response)
                     val pred = json_obj.getString("fraud_result")
                     val pred_score = json_obj.getString("fraud_score")
+                    if(pred.equals("0"))    pred_result = "Safe"
+                    if(pred.equals("1"))    pred_result = "Fraud"
+                    res_calculate = 1
                     if(pred.equals("0")) {
                         bind.tvResult.setText("Predicted Result: Safe! [Risk Score: ${pred_score}%]")
                         bind.tvResult.setTextColor(Color.CYAN)
@@ -242,6 +272,7 @@ class activity_user_dashboard : AppCompatActivity() {
                         bind.tvResult.setText("Predicted Result: Fraud! [Risk Score: ${pred_score}%]")
                         bind.tvResult.setTextColor(Color.RED)
                     }
+                    setIntentVar(finamt,findate,fintime,pred_result)
                     hideLoading()
                 }catch(e: Exception){
                     Toast.makeText(this, "Error parsing response: ${e.message}", Toast.LENGTH_SHORT).show()

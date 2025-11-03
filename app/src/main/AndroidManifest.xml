@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UPISafe">
         <activity
+            android:name=".activity_user_history"
+            android:exported="false" />
+        <activity
             android:name=".progressActivity"
             android:exported="false" />
         <activity

@@ -4,15 +4,15 @@
     tools:showIn="navigation_view">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_user_dashboard"
+            android:id="@+id/nav_user_dashboard_2"
             android:title="User Dashboard"
             android:titleTextColor="#000000"/>
         <item
-            android:id="@+id/nav_details_hist_1"
-            android:title="Transaction Details History"
+            android:id="@+id/go_info"
+            android:title="What is UPISafe?"
             android:titleTextColor="#000000"/>
         <item
-            android:id="@+id/nav_about_us_1"
+            android:id="@+id/nav_about_us_2"
             android:title="About Us"
             android:titleTextColor="#000000"/>
     </group>
