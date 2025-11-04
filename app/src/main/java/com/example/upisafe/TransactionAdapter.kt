@@ -15,10 +15,12 @@ class TransactionAdapter(private val transactionList: List<TransactionModel>) :
         val tvTime: TextView = itemView.findViewById(R.id.tvTime)
         val tvPlatform: TextView = itemView.findViewById(R.id.tvPlatform)
         val  tvresult: TextView = itemView.findViewById(R.id.tvResult1)
+
+        val res_score: TextView = itemView.findViewById(R.id.tvResult_score)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionViewHolder {
-        val view = LayoutInflater.from(parent.context)
+            val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_transaction, parent, false)
         return TransactionViewHolder(view)
     }
@@ -30,6 +32,7 @@ class TransactionAdapter(private val transactionList: List<TransactionModel>) :
         holder.tvTime.text = "Time: ${transaction.time}"
         holder.tvPlatform.text = "Platform: ${transaction.platform}"
         holder.tvresult.text = "Result: ${transaction.result}"
+        holder.res_score.text = "Risk Score: ${transaction.riskScore}"
     }
 
     override fun getItemCount(): Int = transactionList.size
