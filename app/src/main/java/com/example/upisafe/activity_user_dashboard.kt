@@ -2,6 +2,7 @@ package com.example.upisafe
 
 import android.content.Intent
 import android.graphics.Color
+import android.health.connect.datatypes.Device
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -19,6 +20,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.upisafe.databinding.ActivityUserDashboardBinding
+import com.google.android.play.core.integrity.an
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -51,7 +53,7 @@ class activity_user_dashboard : AppCompatActivity() {
         }
     }
 
-    val url = "https://upisafe-flask-giuq.onrender.com"
+    val url = "https://upisafe-flask-2-3.onrender.com/"
     override fun onCreate(savedInstanceState: Bundle?) {
         hideLoading()
         super.onCreate(savedInstanceState)
@@ -94,7 +96,11 @@ class activity_user_dashboard : AppCompatActivity() {
         database = Firebase.database.reference
 
         setTransparentStatusBar()
-        setUpSpinner()
+        setUpSpinner_Platform()
+        setup_fail()
+        setup_international()
+        tran_type()
+        tran_dev()
         textwatcher()
 
         bind.btnCheckFraud.setOnClickListener {
@@ -149,9 +155,16 @@ class activity_user_dashboard : AppCompatActivity() {
         val amount = bind.etAmount.text.toString()
         val date = bind.etDate.text.toString()
         val time = bind.etTime.text.toString()
+        val international = bind.actvInternational.text.toString()
+        val fail = bind.actvFailed.text.toString()
+        val type = bind.actvTransactionType.text.toString()
+        val device = bind.actvDeviceType.text.toString()
         bind.btnCheckFraud.isEnabled = false
         bind.btnClear.isEnabled = false
-        if(amount.isEmpty() || date.isEmpty() || time.isEmpty()) {
+        if(amount.isEmpty() || date.isEmpty() ||
+            time.isEmpty() || international.isEmpty()
+            || fail.isEmpty() || type.isEmpty()
+            || device.isEmpty()) {
             Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_SHORT).show()
             hideLoading()
             return
@@ -228,24 +241,23 @@ class activity_user_dashboard : AppCompatActivity() {
                 hideLoading()
                 return
             }
-
-            val findate = date.replace("/","").toInt()
-            val fintime = time.replace(":","").toInt()
-            checkFraud_1(finamt, findate, fintime)
+            val fintime = hour.toString()
+            checkFraud_1(amount,fintime,fail,international,type,device)
         }
     }
 
-    private fun checkFraud_1(finamt: Int, findate: Int, fintime: Int) {
+    private fun checkFraud_1(amt: String, fit: String,
+                             fail: String, inter: String, type: String, device: String) {
         var pred_result: String = ""
         val str = object : StringRequest(Method.POST,url,
             Response.Listener<String>(){response->
                 try {
                     val json_obj = JSONObject(response)
-                    val pred = json_obj.getString("fraud_result")
-                    val pred_score = json_obj.getString("fraud_score")
-                    if(pred.equals("0"))    pred_result = "Safe"
-                    if(pred.equals("1"))    pred_result = "Fraud"
-                    if(pred.equals("0")) {
+                    val pred = json_obj.getString("Fraud_Result")
+                    val pred_score = json_obj.getString("Risk_Score")
+                    if(pred.equals("False"))    pred_result = "Safe"
+                    if(pred.equals("True"))    pred_result = "Fraud"
+                    if(pred.equals("False")) {
                         bind.tvResult.setText("Predicted Result: Safe! [Risk Score: ${pred_score}%]")
                         bind.tvResult.setTextColor(Color.CYAN)
                     }
@@ -295,15 +307,17 @@ class activity_user_dashboard : AppCompatActivity() {
             },
             Response.ErrorListener(){
                 showLoading()
-                checkFraud_1(finamt,findate,fintime)
+                checkFraud_1(amt,fit,fail,inter,type,device)
             }
         ){
             override fun getParams(): Map<String,String> {
                 val params  = HashMap<String,String>()
-                params.put("amount",finamt.toString())
-                params.put("date",findate.toString())
-                params.put("time",fintime.toString())
-
+                params.put("international",inter)
+                params.put("fail",fail)
+                params.put("type",type)
+                params.put("device",device)
+                params.put("amount",amt)
+                params.put("time",fit)
                 return params
             }
         }
@@ -311,11 +325,33 @@ class activity_user_dashboard : AppCompatActivity() {
         req_que.add(str)
     }
 
-    private fun setUpSpinner() {
+    //All Dropdown Items
+    private fun setUpSpinner_Platform() {
         val plat = listOf("GPay", "Paytm", "PhonePe", "BharatPe", "PayPal", "Others")
         val plat_adapter = ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item,plat)
         bind.actvType.setAdapter(plat_adapter)
     }
+    private fun setup_international(){
+        val inter = listOf("Yes","No")
+        val int_adapter = ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item,inter)
+        bind.actvInternational.setAdapter(int_adapter)
+    }
+    private fun setup_fail(){
+        val failed = listOf("Yes","No")
+        val fail_adapter = ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item,failed)
+        bind.actvFailed.setAdapter(fail_adapter)
+    }
+    private fun tran_type(){
+        val t_type = listOf("Online","POS","ATM","Transfer")
+        val type_adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item,t_type)
+        bind.actvTransactionType.setAdapter(type_adapter)
+    }
+    private fun tran_dev(){
+        val dev_type = listOf("Tablet","Computer","Mobile")
+        val dev_adapter = ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item,dev_type)
+        bind.actvDeviceType.setAdapter(dev_adapter)
+    }
+
     private fun showLoading() {
         bind.loadingLayout.visibility = View.VISIBLE
         bind.btnCheckFraud.isEnabled = false

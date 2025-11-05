@@ -31,7 +31,8 @@
                     android:layout_gravity="start"
                     android:background="@drawable/outline_assignment_24"
                     android:paddingStart="16dp"
-                    android:paddingEnd="16dp" />
+                    android:paddingEnd="16dp"
+                    android:backgroundTint="#FF1200"/>
 
                 <TextView
                     android:id="@+id/tvTitle_1"
@@ -40,7 +41,7 @@
                     android:layout_gravity="center"
                     android:text="UPISafe"
                     android:textAppearance="?attr/textAppearanceTitleLarge"
-                    android:textColor="?attr/colorOnSurface"
+                    android:textColor="#E91E63"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 

@@ -7,4 +7,5 @@ data class TransactionModel(
     val result: String = "", // "Safe" or "Fraud"
     val riskScore: String = "", // "85%"
     val time: String = "",
+    val timestamp: Long = System.currentTimeMillis()
 )

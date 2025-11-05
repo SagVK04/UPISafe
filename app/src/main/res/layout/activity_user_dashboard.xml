@@ -31,6 +31,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
                     android:background="@drawable/outline_assignment_24"
+                    android:backgroundTint="#F01404"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp" />
 
@@ -41,7 +42,7 @@
                     android:layout_gravity="center"
                     android:text="UPISafe"
                     android:textAppearance="?attr/textAppearanceTitleLarge"
-                    android:textColor="#0B4A7C"
+                    android:textColor="#E91E63"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -75,15 +76,15 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <!-- UPDATED: Material 3 OutlinedBox Style Applied -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilAmount"
-                    style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:hint="Amount (e.g., 500.00)"
                     app:hintTextColor="@color/black"
-                    android:background="#E0F7FA"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvSubtitle">
@@ -97,15 +98,15 @@
                         android:inputType="numberDecimal" />
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <!-- UPDATED: Material 3 OutlinedBox Style Applied -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilDate"
-                    style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:hint="Date (DD/MM/YYYY)"
                     app:hintTextColor="@color/black"
-                    android:background="#E0F7FA"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tilAmount">
@@ -119,15 +120,15 @@
                         android:inputType="date" />
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <!-- UPDATED: Material 3 OutlinedBox Style Applied -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilTime"
-                    style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:hint="Time (24 Hour - HH:MM)"
                     app:hintTextColor="@color/black"
-                    android:background="#E0F7FA"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tilDate">
@@ -141,15 +142,15 @@
                         android:inputType="time" />
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <!-- UPDATED: Material 3 OutlinedBox Style Applied (Exposed Dropdown) -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilType"
-                    style="@style/Widget.Material3.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:hint="Transaction Platform"
                     app:hintTextColor="@color/black"
-                    android:background="#E0F7FA"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tilTime">
@@ -163,6 +164,109 @@
                         android:inputType="textAutoComplete" />
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <TextView
+                    android:id="@+id/tvAdditionalDetails"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="Additional Details"
+                    android:textAlignment="center"
+                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                    android:textColor="#E91E63"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tilType" />
+
+                <!-- MODIFIED ROW 1 (OutlinedBox style and two-column layout maintained) -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilInternational"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:hint="International?"
+                    app:hintTextColor="@color/black"
+                    app:layout_constraintEnd_toStartOf="@+id/tilFailed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvAdditionalDetails">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/actvInternational"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:textColor="#3F51B5"
+                        android:inputType="textAutoComplete" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilFailed"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:hint="Failed?"
+                    app:hintTextColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tilInternational"
+                    app:layout_constraintTop_toTopOf="@+id/tilInternational">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/actvFailed"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:textColor="#3F51B5"
+                        android:inputType="textAutoComplete" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- MODIFIED ROW 2 (OutlinedBox style and two-column layout maintained) -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilTransactionType"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:hint="Transaction Type"
+                    app:hintTextColor="@color/black"
+                    app:layout_constraintEnd_toStartOf="@+id/tilDeviceType"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tilInternational">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/actvTransactionType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:textColor="#3F51B5"
+                        android:inputType="textAutoComplete" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilDeviceType"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:hint="Device Type"
+                    app:hintTextColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tilTransactionType"
+                    app:layout_constraintTop_toTopOf="@+id/tilTransactionType">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/actvDeviceType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:textColor="#3F51B5"
+                        android:inputType="textAutoComplete" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Button constraints correctly pointing to the last row -->
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnCheckFraud"
                     style="@style/Widget.Material3.Button.ElevatedButton"
@@ -178,7 +282,7 @@
                     app:layout_constraintEnd_toStartOf="@id/btnClear"
                     app:layout_constraintHorizontal_weight="1"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tilType" />
+                    app:layout_constraintTop_toBottomOf="@id/tilTransactionType" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnClear"
@@ -195,7 +299,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_weight="1"
                     app:layout_constraintStart_toEndOf="@id/btnCheckFraud"
-                    app:layout_constraintTop_toBottomOf="@id/tilType" />
+                    app:layout_constraintTop_toBottomOf="@id/tilTransactionType" />
 
                 <TextView
                     android:id="@+id/tvResult"

@@ -93,6 +93,7 @@ class activity_user_history : AppCompatActivity() {
                         transactionList.add(it)
                     }
                 }
+                transactionList.sortByDescending { it.timestamp }
                 val adapter = TransactionAdapter(transactionList)
                 bind.rvTransactions.adapter = adapter
             }
