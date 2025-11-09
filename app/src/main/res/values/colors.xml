@@ -12,4 +12,5 @@
     <color name="input_bg_pale">#F0EBFD</color>
     <color name="input_hint">#ADADB6</color>
     <color name="recycler_icon">#E91E63</color>
+    <color name="teal_200">#FF03DAC5</color>
 </resources>

@@ -34,7 +34,7 @@ class activity_user_dashboard : AppCompatActivity() {
     private val bind: ActivityUserDashboardBinding by lazy {
         ActivityUserDashboardBinding.inflate(layoutInflater)
     }
-
+    private val url_1 = "https://upisafe-flask-2-3.onrender.com/"
     private lateinit var auth : FirebaseAuth
     private lateinit var database: DatabaseReference // <-- Add this variable
 

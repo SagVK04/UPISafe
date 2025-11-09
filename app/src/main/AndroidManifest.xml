@@ -17,31 +17,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UPISafe">
         <activity
+            android:name=".activity_splash_screen"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".activity_user_history"
             android:exported="false" />
         <activity
-            android:name=".progressActivity"
-            android:exported="false" />
-        <activity
-            android:name=".toggle_content"
-            android:exported="false" />
-        <activity
             android:name=".upisafe_info"
-            android:exported="false" />
-        <activity
-            android:name=".UPISafe_Informations"
             android:exported="false" />
         <activity
             android:name=".activity_user_dashboard"
             android:exported="false" />
         <activity
             android:name=".login"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:exported="false">
         </activity>
         <activity
             android:name=".activity_register"
