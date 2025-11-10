@@ -45,15 +45,15 @@ class activity_splash_screen : AppCompatActivity() {
                 // Proceed to the main activity
                 bind.root.postDelayed({
                     navigateToDashboard()
-                },5000)
+                },3000)
             },
             { error ->
                 // This block executes if there's an error (e.g., no internet, server not running)
-                Toast.makeText(this, "Connection failed. Retrying...: ${error.message}", Toast.LENGTH_LONG).show()
+                //Toast.makeText(this, "Connection failed. Retrying...: ${error.message}", Toast.LENGTH_LONG).show()
                 // Implement a simple retry mechanism after a delay (e.g., 3 seconds)
                 bind.root.postDelayed({
                     checkServerConnection()
-                }, 5000) // 3-second delay before retry
+                }, 5) // 3-second delay before retry
             }
         )
         Volley.newRequestQueue(this).add(stringRequest)

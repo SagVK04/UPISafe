@@ -99,6 +99,7 @@ class activity_user_history : AppCompatActivity() {
             }
                 .addOnFailureListener { exception ->
                     Toast.makeText(this, "Failed to load history: ${exception.message}", Toast.LENGTH_LONG).show()
+                    fetchTransactionHistory() //Again try to fetch details
                 }
         }
     }
