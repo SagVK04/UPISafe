@@ -2,7 +2,6 @@ package com.example.upisafe
 
 import android.content.Intent
 import android.graphics.Color
-import android.health.connect.datatypes.Device
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -20,7 +19,6 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.upisafe.databinding.ActivityUserDashboardBinding
-import com.google.android.play.core.integrity.an
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -87,7 +85,10 @@ class activity_user_dashboard : AppCompatActivity() {
                     finish()
                 }
                 R.id.nav_about_us -> {
-                    Toast.makeText(this, "Not Implemented!", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, activity_about_us::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                    finish()
                 }
             }
             true
@@ -108,7 +109,7 @@ class activity_user_dashboard : AppCompatActivity() {
         }
         bind.btnLogout.setOnClickListener {
             auth.signOut()
-            val intent = Intent(this,login::class.java)
+            val intent = Intent(this,activity_login::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
             finish()

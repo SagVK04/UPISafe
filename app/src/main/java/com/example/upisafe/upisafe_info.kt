@@ -69,7 +69,10 @@ class upisafe_info : AppCompatActivity() {
                     finish()
                 }
                 R.id.nav_about_us_1 -> {
-                    Toast.makeText(this, "Not Implemented!", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, activity_about_us::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                    finish()
                 }
             }
             true

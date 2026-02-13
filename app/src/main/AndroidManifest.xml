@@ -17,10 +17,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UPISafe">
         <activity
+            android:name=".activity_about_us"
+            android:exported="false" />
+        <activity
             android:name=".activity_splash_screen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -34,9 +38,8 @@
             android:name=".activity_user_dashboard"
             android:exported="false" />
         <activity
-            android:name=".login"
-            android:exported="false">
-        </activity>
+            android:name=".activity_login"
+            android:exported="false"></activity>
         <activity
             android:name=".activity_register"
             android:exported="false" />

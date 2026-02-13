@@ -33,6 +33,12 @@ class TransactionAdapter(private val transactionList: List<TransactionModel>) :
         holder.tvPlatform.text = "Platform: ${transaction.platform}"
         holder.tvresult.text = "Result: ${transaction.result}"
         holder.res_score.text = "Risk Score: ${transaction.riskScore}"
+        holder.tvAmount.textSize = 20F
+        holder.tvDate.textSize = 20F
+        holder.tvTime.textSize = 20F
+        holder.tvPlatform.textSize = 20F
+        holder.tvresult.textSize = 20F
+        holder.res_score.textSize = 20F
     }
 
     override fun getItemCount(): Int = transactionList.size

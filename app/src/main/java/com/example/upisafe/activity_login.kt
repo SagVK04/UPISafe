@@ -2,7 +2,6 @@ package com.example.upisafe
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -12,7 +11,7 @@ import com.example.upisafe.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
-class login : AppCompatActivity() {
+class activity_login : AppCompatActivity() {
     private val bind : ActivityLoginBinding by lazy {
         ActivityLoginBinding.inflate(layoutInflater)
     }
