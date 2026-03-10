@@ -8,7 +8,6 @@
     android:layout_height="match_parent"
     tools:openDrawer="start">
 
-    <!-- The main screen content, including the App Bar and ScrollView -->
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -76,7 +75,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <!-- UPDATED: Material 3 OutlinedBox Style Applied -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilAmount"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
@@ -94,11 +92,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="#3F51B5"
-                        app:hintTextColor="@color/black"
                         android:inputType="numberDecimal" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- UPDATED: Material 3 OutlinedBox Style Applied -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilDate"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
@@ -116,11 +112,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="#3F51B5"
-                        app:hintTextColor="@color/black"
                         android:inputType="date" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- UPDATED: Material 3 OutlinedBox Style Applied -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilTime"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
@@ -138,135 +132,49 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="#3F51B5"
-                        app:hintTextColor="@color/black"
                         android:inputType="time" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- UPDATED: Material 3 OutlinedBox Style Applied (Exposed Dropdown) -->
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilType"
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:id="@+id/upiId"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:hint="Transaction Platform"
+                    android:hint="UPI Id"
                     app:hintTextColor="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tilTime">
 
-                    <AutoCompleteTextView
-                        android:id="@+id/actvType"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/acupiId"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@null"
                         android:textColor="#3F51B5"
-                        android:inputType="textAutoComplete" />
+                        android:inputType="text" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <TextView
-                    android:id="@+id/tvAdditionalDetails"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:text="Additional Details"
-                    android:textAlignment="center"
-                    android:textAppearance="?attr/textAppearanceTitleMedium"
-                    android:textColor="#E91E63"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tilType" />
-
-                <!-- MODIFIED ROW 1 (OutlinedBox style and two-column layout maintained) -->
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilInternational"
+                    android:id="@+id/tilTranType"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:hint="International?"
-                    app:hintTextColor="@color/black"
-                    app:layout_constraintEnd_toStartOf="@+id/tilFailed"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvAdditionalDetails">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/actvInternational"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:textColor="#3F51B5"
-                        android:inputType="textAutoComplete" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilFailed"
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:hint="Failed?"
-                    app:hintTextColor="@color/black"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/tilInternational"
-                    app:layout_constraintTop_toTopOf="@+id/tilInternational">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/actvFailed"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:textColor="#3F51B5"
-                        android:inputType="textAutoComplete" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <!-- MODIFIED ROW 2 (OutlinedBox style and two-column layout maintained) -->
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilTransactionType"
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:hint="Transaction Type"
-                    app:hintTextColor="@color/black"
-                    app:layout_constraintEnd_toStartOf="@+id/tilDeviceType"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tilInternational">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/actvTransactionType"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:textColor="#3F51B5"
-                        android:inputType="textAutoComplete" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilDeviceType"
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
                     android:hint="Device Type"
                     app:hintTextColor="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/tilTransactionType"
-                    app:layout_constraintTop_toTopOf="@+id/tilTransactionType">
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/upiId">
 
-                    <AutoCompleteTextView
-                        android:id="@+id/actvDeviceType"
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                        android:id="@+id/actvTranType"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@null"
                         android:textColor="#3F51B5"
-                        android:inputType="textAutoComplete" />
+                        android:inputType="text" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- Button constraints correctly pointing to the last row -->
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnCheckFraud"
                     style="@style/Widget.Material3.Button.ElevatedButton"
@@ -282,7 +190,7 @@
                     app:layout_constraintEnd_toStartOf="@id/btnClear"
                     app:layout_constraintHorizontal_weight="1"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tilTransactionType" />
+                    app:layout_constraintTop_toBottomOf="@id/tilTranType" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnClear"
@@ -299,7 +207,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_weight="1"
                     app:layout_constraintStart_toEndOf="@id/btnCheckFraud"
-                    app:layout_constraintTop_toBottomOf="@id/tilTransactionType" />
+                    app:layout_constraintTop_toBottomOf="@id/tilTranType" />
 
                 <TextView
                     android:id="@+id/tvResult"
@@ -332,7 +240,6 @@
 
         </androidx.core.widget.NestedScrollView>
 
-        <!-- The loading overlay, which is now correctly placed on top of all other content -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/loadingLayout"
             android:layout_width="match_parent"
@@ -365,7 +272,6 @@
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <!-- The Navigation View remains a direct child of the DrawerLayout -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view_dash"
         android:layout_width="wrap_content"
