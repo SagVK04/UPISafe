@@ -18,7 +18,7 @@ class activity_splash_screen : AppCompatActivity() {
     private val bind : ActivitySplashScreenBinding by lazy {
         ActivitySplashScreenBinding.inflate(layoutInflater)
     }
-    private val url = "https://upisafe-flask-2-3.onrender.com/"
+    private val url = "https://upisafebackend.onrender.com/"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -53,7 +53,7 @@ class activity_splash_screen : AppCompatActivity() {
                 // Implement a simple retry mechanism after a delay (e.g., 3 seconds)
                 bind.root.postDelayed({
                     checkServerConnection()
-                }, 5) // 3-second delay before retry
+                }, 2) // 2-second delay before retry
             }
         )
         Volley.newRequestQueue(this).add(stringRequest)

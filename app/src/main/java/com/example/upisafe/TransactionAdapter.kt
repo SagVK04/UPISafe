@@ -31,7 +31,7 @@ class TransactionAdapter(private val transactionList: List<TransactionModel>) :
         holder.tvAmount.text = "Amount: ₹${transaction.amount}"
         holder.tvDate.text = "Date: ${transaction.date}"
         holder.tvTime.text = "Time: ${transaction.time}"
-        holder.upi_id.text = "Receiver's UPI Id:: ${transaction.id}"
+        holder.upi_id.text = "Receiver's UPI Id: ${transaction.id}"
         holder.trans_type.text = "Transaction Type: ${transaction.tr_type}"
         holder.tvresult.text = "Result: ${transaction.result}"
         holder.res_score.text = "Risk Score: ${transaction.riskScore}"
